@@ -1,0 +1,112 @@
+{
+  "id": "expense-demo-policy",
+  "version": "1.0.0",
+  "default_effect": "deny",
+  "rules": [
+    {
+      "id": "allow-task-receipts",
+      "description": "The expense agent may read only receipts mounted into its task workspace.",
+      "effect": "allow",
+      "conditions": {
+        "agent_ids": [
+          "expense-agent"
+        ],
+        "operations": [
+          "read"
+        ],
+        "resources": [
+          "/task/receipts/**"
+        ]
+      },
+      "explanation": "The file is inside the task-scoped receipt capability."
+    },
+    {
+      "id": "deny-user-documents",
+      "description": "Task agents may never inspect the user's general documents directory.",
+      "effect": "deny",
+      "conditions": {
+        "operations": [
+          "read"
+        ],
+        "resources": [
+          "/user/documents/**"
+        ]
+      },
+      "explanation": "The resource is outside the task-scoped filesystem capability."
+    },
+    {
+      "id": "allow-approved-expense-domain",
+      "description": "The browser may navigate only within the approved synthetic expense system.",
+      "effect": "allow",
+      "conditions": {
+        "operations": [
+          "navigate"
+        ],
+        "destinations": [
+          "expenses.company.test/**"
+        ]
+      },
+      "explanation": "The destination is inside the task's approved network capability."
+    },
+    {
+      "id": "deny-attacker-domain",
+      "description": "The prompt-injection fixture's destination is explicitly forbidden.",
+      "effect": "deny",
+      "conditions": {
+        "operations": [
+          "navigate",
+          "upload"
+        ],
+        "destinations": [
+          "malicious-verification.com/**"
+        ]
+      },
+      "explanation": "The destination is not present in the task's approved network capability."
+    },
+    {
+      "id": "allow-expense-draft",
+      "description": "The agent may create a reversible local draft.",
+      "effect": "allow",
+      "conditions": {
+        "agent_ids": [
+          "expense-agent"
+        ],
+        "operations": [
+          "create"
+        ],
+        "resources": [
+          "expense_report_draft"
+        ]
+      },
+      "explanation": "Creating the local draft is task-scoped and reversible."
+    },
+    {
+      "id": "require-approval-expense-submission",
+      "description": "Submitting financial and personal data requires a human checkpoint.",
+      "effect": "require_approval",
+      "conditions": {
+        "agent_ids": [
+          "expense-agent"
+        ],
+        "operations": [
+          "submit"
+        ],
+        "resources": [
+          "expense-report-*"
+        ],
+        "destinations": [
+          "expenses.company.test/**"
+        ],
+        "data_labels_any": [
+          "PERSONAL",
+          "FINANCIAL"
+        ],
+        "risk_levels": [
+          "high",
+          "critical"
+        ]
+      },
+      "explanation": "The action sends sensitive expense data to an external system."
+    }
+  ]
+}
