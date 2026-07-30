@@ -15,14 +15,14 @@ const effectPrecedence: Record<PolicyEffect, number> = {
   deny: 3
 };
 
-function globMatches(value: string, pattern: string): boolean {
+export function matchesPattern(value: string, pattern: string): boolean {
   const escaped = pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
   const expression = escaped.replaceAll("**", "\u0000").replaceAll("*", "[^/]*").replaceAll("\u0000", ".*");
   return new RegExp(`^${expression}$`).test(value);
 }
 
 function anyPatternMatches(value: string, patterns: string[]): boolean {
-  return patterns.some((pattern) => globMatches(value, pattern));
+  return patterns.some((pattern) => matchesPattern(value, pattern));
 }
 
 function conditionsMatch(
@@ -122,4 +122,3 @@ export function evaluateAction(
     explanation: decisiveRules.map((rule) => rule.explanation).join(" ")
   };
 }
-

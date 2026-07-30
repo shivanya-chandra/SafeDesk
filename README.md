@@ -30,15 +30,19 @@ Verifier checks the resulting system state
 Evidence Ledger records a replayable result
 ```
 
-## Stage 1: policy foundation
+## Implemented foundation
 
-The first working slice includes:
+Stages 1 and 2 now include:
 
 - runtime-validated action and policy contracts;
 - a deterministic, deny-by-default policy engine;
 - explicit precedence: `deny` > `require_approval` > `allow`;
 - capability rules over operations, resources, destinations, and data labels;
-- tests for the flagship malicious-receipt scenario.
+- HMAC-signed, expiring capabilities bound to one agent and task;
+- a policy-enforcing action gateway;
+- scoped file and injected-network adapters that re-check authority;
+- single-use approvals bound to the exact action and policy version;
+- synthetic expense-report tools and integration tests.
 
 ```ts
 const decision = evaluateAction(expensePolicy, {
@@ -73,10 +77,12 @@ See [ROADMAP.md](./ROADMAP.md) for the five delivery stages,
 
 ## Current status
 
-Stage 1 is implemented. SafeDesk does not execute real external side effects yet;
-that boundary is intentionally reserved for Stage 2.
+Stages 1 and 2 are implemented. SafeDesk executes only against temporary files and
+injected synthetic services; it does not use real credentials or external side
+effects. See
+[docs/stage-2-security-boundary.md](./docs/stage-2-security-boundary.md) for the
+enforcement model and its current limitations.
 
 ## License
 
 [MIT](./LICENSE)
-

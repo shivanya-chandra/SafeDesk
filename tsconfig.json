@@ -14,8 +14,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "types": [
-      "node",
-      "vitest/globals"
+      "node"
     ]
   },
   "include": [
@@ -23,4 +22,3 @@
     "examples/**/*.ts"
   ]
 }
-
