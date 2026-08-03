@@ -11,6 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:stage3": "vitest run packages/runtime/test/stage-3.integration.test.ts",
+    "test:gym": "vitest run packages/security-gym/test/security-gym.test.ts",
+    "gym": "tsx packages/security-gym/src/cli.ts",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm test"
   },
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "tsx": "^4.23.5",
     "typescript": "^5.8.0",
     "vitest": "^3.2.0"
   }
