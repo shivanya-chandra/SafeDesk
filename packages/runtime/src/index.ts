@@ -4,4 +4,8 @@ export * from "./approval-checkpoints.js";
 export * from "./canonical-json.js";
 export * from "./capability-authority.js";
 export * from "./errors.js";
-
+export * from "./evidence-ledger.js";
+export * from "./fault-injection.js";
+export * from "./recovery.js";
+export * from "./replay.js";
+export * from "./verification.js";
