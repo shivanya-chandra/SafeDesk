@@ -42,7 +42,8 @@ export type AdapterBoundaryErrorCode =
   | "MISSING_DESTINATION"
   | "ADAPTER_NOT_FOUND"
   | "INVALID_TOOL_INPUT"
-  | "RESOURCE_NOT_FOUND";
+  | "RESOURCE_NOT_FOUND"
+  | "RECOVERY_NOT_SUPPORTED";
 
 export class AdapterBoundaryError extends Error {
   readonly code: AdapterBoundaryErrorCode;
@@ -54,3 +55,42 @@ export class AdapterBoundaryError extends Error {
   }
 }
 
+export class EvidenceIntegrityError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "EvidenceIntegrityError";
+  }
+}
+
+export class InjectedFailureError extends Error {
+  readonly phase: "before_execution" | "after_execution";
+
+  constructor(phase: "before_execution" | "after_execution") {
+    super(`Synthetic failure injected ${phase.replace("_", " ")}.`);
+    this.name = "InjectedFailureError";
+    this.phase = phase;
+  }
+}
+
+export class InjectedVerifierFailureError extends Error {
+  constructor() {
+    super("Synthetic verifier failure injected.");
+    this.name = "InjectedVerifierFailureError";
+  }
+}
+
+export type RecoveryErrorCode =
+  | "RECOVERY_CHECKPOINT_NOT_FOUND"
+  | "RECOVERY_CHECKPOINT_CONSUMED"
+  | "RECOVERY_ACTION_CHANGED"
+  | "RECOVERY_RESULT_MISSING";
+
+export class RecoveryError extends Error {
+  readonly code: RecoveryErrorCode;
+
+  constructor(code: RecoveryErrorCode, message: string) {
+    super(message);
+    this.name = "RecoveryError";
+    this.code = code;
+  }
+}

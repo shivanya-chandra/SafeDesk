@@ -32,6 +32,15 @@ SafeDesk owns those handles and exposes only capability-scoped adapters.
 7. A separate verifier checks the expected effect against observed state.
 8. The evidence ledger records the proposal, decision, execution, and proof.
 
+If execution throws or verification cannot confirm the expected state, the
+recovery manager uses the checkpoint's declared strategy: restore a captured
+snapshot or invoke a compensating action. Every recovery attempt is appended to
+the same evidence chain.
+
+Replay verifies the complete ledger chain before selecting a run. It then
+re-evaluates recorded proposals against a chosen policy and uses replay-only mock
+tools, never the adapters that hold real authority.
+
 ## Policy semantics in Stage 1
 
 - The default effect is `deny`.
@@ -56,4 +65,3 @@ The first demo will run entirely against synthetic data:
 - a dashboard driven from evidence-ledger events.
 
 No production credentials are needed to demonstrate the security boundary.
-

@@ -42,7 +42,7 @@ Acceptance:
 - approved actions cannot be changed after approval;
 - integration tests run without real personal data or external side effects.
 
-## Stage 3 — Evidence, replay, and recovery
+## Stage 3 — Evidence, replay, and recovery ✅
 
 Make every side effect explainable, verifiable, and recoverable where possible.
 

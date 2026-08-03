@@ -69,6 +69,16 @@ export const policySetSchema = z.object({
   rules: z.array(policyRuleSchema)
 }).strict();
 
+export const policyDecisionSchema = z.object({
+  action_id: z.string().min(1),
+  decision: policyEffectSchema,
+  matched_policies: z.array(z.string()),
+  policy_id: z.string().min(1),
+  policy_version: z.string().min(1),
+  risk_level: riskLevelSchema,
+  explanation: z.string()
+}).strict();
+
 export interface CapabilityGrant {
   agent_id: string;
   task_id: string;
@@ -111,13 +121,4 @@ export type PolicyEffect = z.infer<typeof policyEffectSchema>;
 export type PolicyConditions = z.infer<typeof policyConditionsSchema>;
 export type PolicyRule = z.infer<typeof policyRuleSchema>;
 export type PolicySet = z.infer<typeof policySetSchema>;
-
-export interface PolicyDecision {
-  action_id: string;
-  decision: PolicyEffect;
-  matched_policies: string[];
-  policy_id: string;
-  policy_version: string;
-  risk_level: RiskLevel;
-  explanation: string;
-}
+export type PolicyDecision = z.infer<typeof policyDecisionSchema>;

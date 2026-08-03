@@ -32,7 +32,7 @@ Evidence Ledger records a replayable result
 
 ## Implemented foundation
 
-Stages 1 and 2 now include:
+Stages 1 through 3 now include:
 
 - runtime-validated action and policy contracts;
 - a deterministic, deny-by-default policy engine;
@@ -42,6 +42,11 @@ Stages 1 and 2 now include:
 - a policy-enforcing action gateway;
 - scoped file and injected-network adapters that re-check authority;
 - single-use approvals bound to the exact action and policy version;
+- a hash-chained, tamper-evident execution ledger;
+- independent outcome verification that catches false tool success;
+- deterministic replay with original or modified policy and mocked tools;
+- snapshot restoration and explicit compensating transactions;
+- controlled failure injection for adapters and verifiers;
 - synthetic expense-report tools and integration tests.
 
 ```ts
@@ -71,17 +76,25 @@ npm install
 npm run check
 ```
 
+Run only the Stage 3 transaction and evidence scenarios with:
+
+```bash
+npm run test:stage3
+```
+
 See [ROADMAP.md](./ROADMAP.md) for the five delivery stages,
 [docs/architecture.md](./docs/architecture.md) for system boundaries, and
 [docs/threat-model.md](./docs/threat-model.md) for the initial threat model.
 
 ## Current status
 
-Stages 1 and 2 are implemented. SafeDesk executes only against temporary files and
+Stages 1 through 3 are implemented. SafeDesk executes only against temporary files and
 injected synthetic services; it does not use real credentials or external side
 effects. See
 [docs/stage-2-security-boundary.md](./docs/stage-2-security-boundary.md) for the
-enforcement model and its current limitations.
+enforcement model and
+[docs/stage-3-evidence-replay-recovery.md](./docs/stage-3-evidence-replay-recovery.md)
+for evidence, verification, replay, recovery, and current limitations.
 
 ## License
 

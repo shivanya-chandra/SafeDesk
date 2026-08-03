@@ -19,6 +19,20 @@ export interface ToolAdapter {
     proposal: ActionProposal,
     capabilityToken: string
   ): Promise<AdapterResult>;
+  captureState?(
+    proposal: ActionProposal,
+    capabilityToken: string
+  ): Promise<unknown>;
+  restoreState?(
+    proposal: ActionProposal,
+    snapshot: unknown,
+    capabilityToken: string
+  ): Promise<AdapterResult>;
+  compensate?(
+    proposal: ActionProposal,
+    executionResult: AdapterResult,
+    capabilityToken: string
+  ): Promise<AdapterResult>;
 }
 
 function isInside(root: string, candidate: string): boolean {
@@ -163,4 +177,3 @@ export class ScopedNetworkAdapter implements ToolAdapter {
     });
   }
 }
-
