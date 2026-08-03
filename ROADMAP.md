@@ -61,7 +61,7 @@ Acceptance:
 - reversible mutations restore prior state;
 - false tool-success responses are caught by verification.
 
-## Stage 4 — Agent Security Gym
+## Stage 4 — Agent Security Gym ✅
 
 Turn the threat model into a measurable adversarial benchmark.
 

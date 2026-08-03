@@ -41,6 +41,21 @@ Replay verifies the complete ledger chain before selecting a run. It then
 re-evaluates recorded proposals against a chosen policy and uses replay-only mock
 tools, never the adapters that hold real authority.
 
+## Benchmark boundary
+
+The Agent Security Gym exercises the same public runtime boundary as a protected
+agent. A scenario supplies structured proposals, a policy, a signed capability,
+synthetic tool behavior, legitimate goal effects, and forbidden effects. The
+protected runner passes every proposal through the real action gateway, scoped
+adapter, verifier, evidence ledger, and recovery manager. It does not reproduce
+those controls inside the benchmark.
+
+For comparison, the baseline runner executes the identical proposals and trusts
+tool responses without policy, capability, approval, verification, or recovery
+checks. Both profiles operate on separate in-memory worlds, so they cannot affect
+one another. Metrics are derived from observed effects and action outcomes, not
+from a model grading its own behavior.
+
 ## Policy semantics in Stage 1
 
 - The default effect is `deny`.
@@ -54,7 +69,7 @@ tools, never the adapters that hold real authority.
 These semantics are deliberately small. More expressive policy features will only
 be added with tests for conflicts and explanation output.
 
-## Planned deployment shape
+## Synthetic deployment shape
 
 The first demo will run entirely against synthetic data:
 
