@@ -19,6 +19,11 @@ export const recoveryClassSchema = z.enum([
 
 export const riskLevelSchema = z.enum(["low", "medium", "high", "critical"]);
 
+const actionParametersSchema: z.ZodType<Record<string, unknown>> = z.record(
+  z.string(),
+  z.unknown()
+);
+
 export const actionProposalSchema = z.object({
   action_id: z.string().min(1),
   agent_id: z.string().min(1),
@@ -26,6 +31,7 @@ export const actionProposalSchema = z.object({
   operation: z.string().min(1),
   resource: z.string().min(1),
   destination: z.string().min(1).optional(),
+  parameters: actionParametersSchema.optional(),
   data_labels: z.array(dataLabelSchema),
   reason: z.string().min(1),
   expected_effect: z.string().min(1),
@@ -61,6 +67,40 @@ export const policySetSchema = z.object({
   version: z.string().min(1),
   default_effect: z.literal("deny").default("deny"),
   rules: z.array(policyRuleSchema)
+}).strict();
+
+export interface CapabilityGrant {
+  agent_id: string;
+  task_id: string;
+  expires_at: string;
+  operations: string[];
+  resources: string[];
+  destinations?: string[] | undefined;
+}
+
+export interface CapabilityManifest extends CapabilityGrant {
+  capability_id: string;
+  issued_at: string;
+}
+
+export const capabilityGrantSchema: z.ZodType<CapabilityGrant> = z.object({
+  agent_id: z.string().min(1),
+  task_id: z.string().min(1),
+  expires_at: z.string().datetime(),
+  operations: z.array(z.string().min(1)).min(1),
+  resources: z.array(z.string().min(1)).min(1),
+  destinations: z.array(z.string().min(1)).min(1).optional()
+}).strict();
+
+export const capabilityManifestSchema: z.ZodType<CapabilityManifest> = z.object({
+  capability_id: z.string().min(1),
+  agent_id: z.string().min(1),
+  task_id: z.string().min(1),
+  issued_at: z.string().datetime(),
+  expires_at: z.string().datetime(),
+  operations: z.array(z.string().min(1)).min(1),
+  resources: z.array(z.string().min(1)).min(1),
+  destinations: z.array(z.string().min(1)).min(1).optional()
 }).strict();
 
 export type DataLabel = z.infer<typeof dataLabelSchema>;

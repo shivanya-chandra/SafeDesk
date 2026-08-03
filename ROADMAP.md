@@ -3,7 +3,7 @@
 Each stage ends with a runnable test boundary. A stage is complete only when its
 acceptance checks pass.
 
-## Stage 1 — Contracts and deterministic policy
+## Stage 1 — Contracts and deterministic policy ✅
 
 Build the security vocabulary and the first enforceable decision boundary.
 
@@ -23,7 +23,7 @@ Acceptance:
 - the flagship attack's file and network requests are denied;
 - `npm run check` passes.
 
-## Stage 2 — Action gateway and scoped execution
+## Stage 2 — Action gateway and scoped execution ✅
 
 Put real authority behind SafeDesk-controlled adapters.
 
@@ -97,4 +97,3 @@ Acceptance:
 - the UI reads structured ledger data rather than inventing agent state;
 - CI runs type, unit, integration, and security-gym checks;
 - no real credentials or personal data are required.
-
